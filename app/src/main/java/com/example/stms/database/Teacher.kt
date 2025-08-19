@@ -1,4 +1,4 @@
-package com.example.stms
+package com.example.stms.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -6,14 +6,12 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "teachers")
 data class Teacher(
     @PrimaryKey(autoGenerate = true) val pk: Int = 0,
-    val userId: String,          // teacher ID (shown in profile)
+    val userId: String,
     val name: String,
     val email: String,
     val password: String,
-    val className: String,
-    val course: String,
-    val result: String?,
-    val details: String?,
+    val className: String,   // homeroom / main class
+    val course: String,      // main course taught
+    val details: String? = null,
     val imageUri: String? = null
 )
-

@@ -6,22 +6,24 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:icon="@drawable/ic_launcher_background"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.STMSApp">
         <activity
-            android:name=".TeacherProfileActivity"
+            android:name=".activity.RoutineEditorActivity"
             android:exported="false" />
         <activity
-            android:name=".StudentProfileActivity"
+            android:name=".activity.TeacherProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".activity.StudentProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".activity.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
