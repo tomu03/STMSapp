@@ -7,12 +7,12 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "routines")
 data class Routine(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val className: String,        // student schedule key
-    val teacherId: String? = null,// to filter for teacher view
-    val dayOfWeek: Int,           // 1..7
-    val startMinutes: Int,        // 9:30 -> 570
-    val endMinutes: Int,          // 10:20 -> 620
+    val className: String,
+    val teacherId: String?,  // teacher who owns it
+    val dayOfWeek: Int,      // 1=Mon ... 7=Sun
+    val startMinutes: Int,
+    val endMinutes: Int,
     val subject: String,
-    val room: String? = null,
-    val courseDetails: String? = null
+    val room: String?,
+    val courseDetails: String?
 )

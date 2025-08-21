@@ -20,5 +20,11 @@ interface RoutineDao {
     @Query("SELECT * FROM routines WHERE className = :cls ORDER BY dayOfWeek, startMinutes")
     suspend fun forTeacher(cls: String): List<Routine>
 
+    @Query("SELECT * FROM routines ORDER BY className, dayOfWeek, startMinutes")
+    suspend fun allRoutines(): List<Routine>
+
+    @Query("UPDATE routines SET subject = :subject, dayOfWeek = :dayOfWeek, startMinutes = :startMinutes, endMinutes = :endMinutes, room = :room, courseDetails = :details WHERE id = :id")
+    suspend fun updateRoutine(id: Int, subject: String, dayOfWeek: Int, startMinutes: Int, endMinutes: Int, room: String?, details: String?)
+
 
 }

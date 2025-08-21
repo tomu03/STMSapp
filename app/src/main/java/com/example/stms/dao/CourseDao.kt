@@ -9,9 +9,12 @@ import com.example.stms.database.Routine
 
 @Dao
 interface CourseDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun insert(course: Course)
-    @Query("SELECT * FROM courses WHERE className=:className")
-    suspend fun byClass(className: String): List<Course>
-    @Query("SELECT * FROM courses WHERE teacherId=:teacherId")
-    suspend fun byTeacher(teacherId: String): List<Course>
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(course: Course): Long
+
+    @Query("SELECT * FROM courses WHERE teacherId = :teacherId")
+    suspend fun getByTeacher(teacherId: String): List<Course>
+
+    @Query("SELECT * FROM courses WHERE className = :cls")
+    suspend fun getByClass(cls: String): List<Course>
 }

@@ -18,62 +18,62 @@ import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.launch
 
 class TeacherProfileActivity : AppCompatActivity() {
-    private val db by lazy { AppDatabase.get(this) }
-    private val adapter = RoutineAdapter()
-    private var teacherId: String = ""
-    private var className: String = ""
+        private val db by lazy { AppDatabase.get(this) }
+        private val adapter = RoutineAdapter()
+        private var teacherId: String = ""
+        private var className: String = ""
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_teacher_profile)
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+            setContentView(R.layout.activity_teacher_profile)
 
-        val pk = intent.getIntExtra("pk", -1); if (pk == -1) finish()
+            val pk = intent.getIntExtra("pk", -1); if (pk == -1) finish()
 
-        val img: ImageView = findViewById(R.id.imgTeacher)
-        val tvName: TextView = findViewById(R.id.tvName)
-        val tvId: TextView = findViewById(R.id.tvId)
-        val tvClass: TextView = findViewById(R.id.tvClass)
-        val tvCourse: TextView = findViewById(R.id.tvCourse)
-        val tvDetails: TextView = findViewById(R.id.tvDetails)
-        val btnAdd: Button = findViewById(R.id.btnAddRoutine)
-        val btnLogout: Button = findViewById(R.id.btnLogout)
-        val tab: TabLayout = findViewById(R.id.tabDays)
-        val rv = findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.rvRoutine)
-        rv.layoutManager = LinearLayoutManager(this); rv.adapter = adapter
+            val img: ImageView = findViewById(R.id.imgTeacher)
+            val tvName: TextView = findViewById(R.id.tvName)
+            val tvId: TextView = findViewById(R.id.tvId)
+            val tvClass: TextView = findViewById(R.id.tvClass)
+            val tvCourse: TextView = findViewById(R.id.tvCourse)
+            val tvDetails: TextView = findViewById(R.id.tvDetails)
+            val btnAdd: Button = findViewById(R.id.btnAddRoutine)
+            val btnLogout: Button = findViewById(R.id.btnLogout)
+            val tab: TabLayout = findViewById(R.id.tabDays)
+            val rv = findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.rvRoutine)
+            rv.layoutManager = LinearLayoutManager(this); rv.adapter = adapter
 
-        DAYS.forEach { tab.addTab(tab.newTab().setText(it)) }
+            DAYS.forEach { tab.addTab(tab.newTab().setText(it)) }
 
-        lifecycleScope.launch {
-            val t = db.teacherDao().getByPk(pk) ?: return@launch
-            teacherId = t.userId; className = t.className
-            runOnUiThread {
-                tvName.text = t.name
-                tvId.text = "ID: ${t.userId}"
-                tvClass.text = "Class: ${t.className}"
-                tvCourse.text = "Course: ${t.course}"
-                tvDetails.text = t.details ?: ""
-                t.imageUri?.let { img.setImageURI(Uri.parse(it)) }
+            lifecycleScope.launch {
+                val t = db.teacherDao().getByPk(pk) ?: return@launch
+                teacherId = t.userId; className = t.className
+                runOnUiThread {
+                    tvName.text = t.name
+                    tvId.text = "ID: ${t.userId}"
+                    tvClass.text = "Class: ${t.className}"
+                    tvCourse.text = "Course: ${t.course}"
+                    tvDetails.text = t.details ?: ""
+                    t.imageUri?.let { img.setImageURI(Uri.parse(it)) }
+                }
+                loadDay(1)
             }
-            loadDay(1)
+
+            tab.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
+                override fun onTabSelected(t: TabLayout.Tab) { loadDay(labelToDayIndex(t.position)) }
+                override fun onTabUnselected(t: TabLayout.Tab) {}
+                override fun onTabReselected(t: TabLayout.Tab) { loadDay(labelToDayIndex(t.position)) }
+            })
+
+            btnAdd.setOnClickListener {
+                startActivity(Intent(this, RoutineEditorActivity::class.java)
+                    .putExtra("prefClass", className)
+                    .putExtra("prefTeacherId", teacherId))
+            }
+            btnLogout.setOnClickListener { finish() }
         }
 
-        tab.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
-            override fun onTabSelected(t: TabLayout.Tab) { loadDay(labelToDayIndex(t.position)) }
-            override fun onTabUnselected(t: TabLayout.Tab) {}
-            override fun onTabReselected(t: TabLayout.Tab) { loadDay(labelToDayIndex(t.position)) }
-        })
-
-        btnAdd.setOnClickListener {
-            startActivity(Intent(this, RoutineEditorActivity::class.java)
-                .putExtra("prefClass", className)
-                .putExtra("prefTeacherId", teacherId))
+        private fun loadDay(dayIndex: Int) = lifecycleScope.launch {
+            val mine = db.routineDao().forTeacher(teacherId)
+            val filtered = mine.filter { it.dayOfWeek == dayIndex }
+            runOnUiThread { adapter.submit(filtered) }
         }
-        btnLogout.setOnClickListener { finish() }
     }
-
-    private fun loadDay(dayIndex: Int) = lifecycleScope.launch {
-        val mine = db.routineDao().forTeacher(teacherId)
-        val filtered = mine.filter { it.dayOfWeek == dayIndex }
-        runOnUiThread { adapter.submit(filtered) }
-    }
-}

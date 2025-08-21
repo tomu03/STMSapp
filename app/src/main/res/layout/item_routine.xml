@@ -3,23 +3,33 @@
     android:orientation="vertical"
     android:padding="12dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@android:color/white">
 
+    <!-- Course or Class Name -->
     <TextView
-        android:id="@+id/tvSubject"
+        android:id="@+id/tvCourseName"
+        android:textSize="18sp"
         android:textStyle="bold"
-        android:textSize="16sp"
+        android:text="Course Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
+    <!-- Day and Time -->
     <TextView
-        android:id="@+id/tvTimeRoom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:id="@+id/tvCourseDetails"
+        android:id="@+id/tvDayTime"
+        android:textSize="14sp"
+        android:text="Monday • 09:00 - 10:00"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxLines="2"/>
+        android:layout_marginTop="4dp"/>
+
+    <!-- Class Name -->
+    <TextView
+        android:id="@+id/tvClassName"
+        android:textSize="14sp"
+        android:text="Class: 10A"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"/>
 </LinearLayout>

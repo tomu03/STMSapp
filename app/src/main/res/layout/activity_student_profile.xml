@@ -1,39 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:padding="16dp"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <LinearLayout android:orientation="horizontal"
-        android:layout_width="match_parent" android:layout_height="wrap_content">
-        <ImageView android:id="@+id/imgStudent"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp">
+        <ImageView
+            android:id="@+id/imgStudent"
             android:src="@android:drawable/sym_def_app_icon"
-            android:layout_width="72dp" android:layout_height="72dp"/>
-        <LinearLayout android:orientation="vertical" android:paddingStart="12dp"
-            android:layout_width="wrap_content" android:layout_height="wrap_content">
-            <TextView android:id="@+id/tvName" android:textStyle="bold" android:textSize="20sp"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-            <TextView android:id="@+id/tvId" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-            <TextView android:id="@+id/tvClass" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            android:layout_width="72dp"
+            android:layout_height="72dp"/>
+        <LinearLayout
+            android:orientation="vertical"
+            android:paddingStart="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvName"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/tvId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/tvClass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
-        <Button android:id="@+id/btnLogout" android:text="Logout"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_gravity="end" android:layout_weight="1"/>
+        <Button
+            android:id="@+id/btnLogout"
+            android:text="Logout"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_gravity="end"
+            android:layout_weight="1"/>
     </LinearLayout>
 
-    <TextView android:id="@+id/tvDetails" android:text="Profile details"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
+    <TextView
+        android:id="@+id/tvDetails"
+        android:text="Profile details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"/>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabDays"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabMode="scrollable" android:layout_marginTop="12dp"/>
+        app:tabMode="scrollable"
+        android:layout_marginTop="12dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvRoutine"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        tools:listitem="@layout/item_routine"
         android:layout_weight="1"/>
 </LinearLayout>
